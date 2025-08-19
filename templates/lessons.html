@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Lessons</h2>
+{% if current_user.role == 'teacher' %}
+<form method="post" enctype="multipart/form-data">
+	<label>Title<input type="text" name="title" required></label>
+	<label>Description<textarea name="description"></textarea></label>
+	<label>File<input type="file" name="file"/></label>
+	<button type="submit">Upload</button>
+</form>
+{% endif %}
+<ul>
+	{% for l in lessons %}
+	<li><strong>{{ l.title }}</strong> — {{ l.description }} {% if l.file_path %}<a href="{{ url_for('uploaded_file', filename=l.file_path) }}">Download</a>{% endif %}</li>
+	{% else %}
+	<li>No lessons yet.</li>
+	{% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Student Dashboard</h2>
+<h3>Announcements</h3>
+<ul>
+	{% for a in announcements %}
+	<li><strong>{{ a.title }}</strong> — {{ a.content }}</li>
+	{% else %}
+	<li>No announcements.</li>
+	{% endfor %}
+</ul>
+
+<h3>Lessons</h3>
+<ul>
+	{% for l in lessons %}
+	<li><strong>{{ l.title }}</strong> — {{ l.description }} {% if l.file_path %}<a href="{{ url_for('uploaded_file', filename=l.file_path) }}">Download</a>{% endif %}</li>
+	{% else %}
+	<li>No lessons yet.</li>
+	{% endfor %}
+</ul>
+
+<h3>Quizzes</h3>
+<ul>
+	{% for q in quizzes %}
+	<li><strong>{{ q.title }}</strong> — <a href="{{ url_for('quiz_take', quiz_id=q.id) }}">Take quiz</a></li>
+	{% else %}
+	<li>No quizzes available.</li>
+	{% endfor %}
+</ul>
+{% endblock %}

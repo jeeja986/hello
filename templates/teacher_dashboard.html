@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Teacher Dashboard</h2>
+<p><a class="button" href="{{ url_for('quiz_create') }}">Create Quiz</a> <a class="button" href="{{ url_for('quiz_manage') }}">Manage Quizzes</a></p>
+<h3>Your Quizzes</h3>
+<ul>
+	{% for q in quizzes %}
+	<li>
+		<strong>{{ q.title }}</strong> — <a href="{{ url_for('quiz_results', quiz_id=q.id) }}">Results</a>
+		<form action="{{ url_for('quiz_toggle', quiz_id=q.id) }}" method="post" style="display:inline">
+			<button type="submit">{{ 'Deactivate' if q.is_active else 'Activate' }}</button>
+		</form>
+	</li>
+	{% else %}
+	<li>No quizzes yet.</li>
+	{% endfor %}
+</ul>
+{% endblock %}

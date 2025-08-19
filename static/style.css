@@ -1,0 +1,15 @@
+body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f7f7fb; color: #222; }
+.container { max-width: 900px; margin: 24px auto; padding: 0 16px; }
+.navbar { display: flex; gap: 12px; padding: 12px 16px; background: #1f2937; color: #fff; align-items: center; }
+.navbar a, .navbar button { color: #fff; text-decoration: none; background: #374151; padding: 8px 12px; border-radius: 6px; border: none; cursor: pointer; }
+.navbar .danger { background: #b91c1c; }
+.button { background: #2563eb; color: #fff; padding: 8px 12px; border-radius: 6px; text-decoration: none; }
+form { display: grid; gap: 10px; margin: 12px 0; }
+label { display: grid; gap: 6px; }
+input[type=text], input[type=email], input[type=password], input[type=number], textarea, select { padding: 8px; border: 1px solid #d1d5db; border-radius: 6px; }
+button { background: #2563eb; color: #fff; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; }
+.flashes { list-style: none; padding: 0; }
+.flash { padding: 8px 12px; border-radius: 6px; margin: 8px 0; }
+.flash.success { background: #ecfdf5; color: #065f46; }
+.flash.error { background: #fef2f2; color: #991b1b; }
+.question { background: #fff; padding: 12px; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 12px; }

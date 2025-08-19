@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Register</h2>
+<form method="post">
+	<label>Name<input type="text" name="name" required></label>
+	<label>Email<input type="email" name="email" required></label>
+	<label>Password<input type="password" name="password" required></label>
+	<label>Role
+		<select name="role" id="role" onchange="toggleParentFields()">
+			<option value="student" selected>Student</option>
+			<option value="teacher">Teacher</option>
+		</select>
+	</label>
+	<div id="parentFields">
+		<label>Parent Email<input type="email" name="parent_email"></label>
+		<label>Parent WhatsApp (+countrycode...)<input type="text" name="parent_whatsapp"></label>
+	</div>
+	<button type="submit">Create Account</button>
+</form>
+<script>
+function toggleParentFields(){
+	var role = document.getElementById('role').value;
+	document.getElementById('parentFields').style.display = role === 'student' ? 'block' : 'none';
+}
+window.onload = toggleParentFields;
+</script>
+{% endblock %}
