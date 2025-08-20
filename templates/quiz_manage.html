@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Manage Quizzes</h2>
+<ul>
+	{% for q in quizzes %}
+	<li>
+		<strong>{{ q.title }}</strong> — {{ 'Active' if q.is_active else 'Inactive' }}
+		<a href="{{ url_for('quiz_results', quiz_id=q.id) }}">Results</a>
+		<form action="{{ url_for('quiz_toggle', quiz_id=q.id) }}" method="post" style="display:inline">
+			<button type="submit">{{ 'Deactivate' if q.is_active else 'Activate' }}</button>
+		</form>
+	</li>
+	{% else %}
+	<li>No quizzes.</li>
+	{% endfor %}
+</ul>
+{% endblock %}

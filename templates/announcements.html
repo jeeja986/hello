@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Announcements</h2>
+{% if current_user.role == 'teacher' %}
+<form method="post">
+	<label>Title<input type="text" name="title" required></label>
+	<label>Content<textarea name="content" required></textarea></label>
+	<button type="submit">Post</button>
+</form>
+{% endif %}
+<ul>
+	{% for a in announcements %}
+	<li><strong>{{ a.title }}</strong> — {{ a.content }}</li>
+	{% else %}
+	<li>No announcements yet.</li>
+	{% endfor %}
+</ul>
+{% endblock %}

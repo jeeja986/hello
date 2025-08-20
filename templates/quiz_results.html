@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Quiz Results: {{ quiz.title }}</h2>
+{% for s in submissions %}
+<div class="submission">
+	<p><strong>Student:</strong> {{ s.student.name }} — <em>{{ s.submitted_at }}</em></p>
+	<p><strong>Status:</strong> {{ 'Graded' if s.graded else 'Pending' }} {% if s.total_score is not none %} | <strong>Total:</strong> {{ s.total_score }}{% endif %}</p>
+	{% if current_user.role == 'teacher' %}
+	<form method="post" action="{{ url_for('quiz_grade_submission', submission_id=s.id) }}">
+		<ul>
+		{% for a in s.answers %}
+			<li>
+				<strong>{{ a.question.question_text }}</strong>
+				{% if a.question.question_type == 'mcq' %}
+					<p>Answer: {{ a.answer_text }} | {{ 'Correct' if a.is_correct else 'Wrong' }}</p>
+					<p>Score: {{ a.score }}</p>
+				{% elif a.question.question_type == 'text' %}
+					<p>Answer: {{ a.answer_text }}</p>
+					<label>Score (0-{{ a.question.points }})<input type="number" min="0" max="{{ a.question.points }}" name="score_{{ a.id }}" value="{{ a.score or 0 }}"></label>
+				{% elif a.question.question_type == 'file' %}
+					<p>File: <a href="{{ url_for('uploaded_file', filename=a.file_path) }}">Download</a></p>
+					<label>Score (0-{{ a.question.points }})<input type="number" min="0" max="{{ a.question.points }}" name="score_{{ a.id }}" value="{{ a.score or 0 }}"></label>
+				{% endif %}
+			</li>
+		{% endfor %}
+		</ul>
+		<button type="submit">Save Grades & Notify</button>
+	</form>
+	{% endif %}
+</div>
+{% else %}
+<p>No submissions yet.</p>
+{% endfor %}
+{% endblock %}

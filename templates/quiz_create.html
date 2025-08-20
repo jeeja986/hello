@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Create Quiz</h2>
+<form method="post" id="quizForm">
+	<label>Title<input type="text" name="title" required></label>
+	<label>Description<textarea name="description"></textarea></label>
+	<div id="questions"></div>
+	<input type="hidden" name="total_questions" id="total_questions" value="0"/>
+	<button type="button" onclick="addQuestion()">Add Question</button>
+	<button type="submit">Create</button>
+</form>
+<script>
+let qCount = 0;
+function addQuestion(){
+	qCount++;
+	document.getElementById('total_questions').value = qCount;
+	const wrap = document.createElement('div');
+	wrap.className = 'question';
+	wrap.innerHTML = `
+		<h4>Question ${qCount}</h4>
+		<label>Text<textarea name="q${qCount}_text" required></textarea></label>
+		<label>Type
+			<select name="q${qCount}_type" onchange="toggleOptions(this, ${qCount})">
+				<option value="mcq">MCQ</option>
+				<option value="text">Text</option>
+				<option value="file">File Upload</option>
+			</select>
+		</label>
+		<label>Points<input type="number" min="1" value="1" name="q${qCount}_points"/></label>
+		<div class="mcq" id="mcq_${qCount}">
+			<div class="options" id="options_${qCount}"></div>
+			<button type="button" onclick="addOption(${qCount})">Add Option</button>
+			<label>Correct<input type="text" name="q${qCount}_correct"></label>
+		</div>
+	`;
+	document.getElementById('questions').appendChild(wrap);
+}
+function addOption(i){
+	const div = document.getElementById('options_' + i);
+	const input = document.createElement('input');
+	input.type = 'text';
+	input.name = `q${i}_options`;
+	div.appendChild(input);
+}
+function toggleOptions(sel, i){
+	const showMcq = sel.value === 'mcq';
+	document.getElementById('mcq_' + i).style.display = showMcq ? 'block' : 'none';
+}
+</script>
+{% endblock %}

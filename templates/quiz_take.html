@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{{ quiz.title }}</h2>
+<p>{{ quiz.description }}</p>
+<form method="post" enctype="multipart/form-data">
+	{% for q in quiz.questions %}
+	<div class="question">
+		<p><strong>Q{{ loop.index }}.</strong> {{ q.question_text }} ({{ q.points }} pts)</p>
+		{% if q.question_type == 'mcq' %}
+			{% set options = (q.options_json and q.options_json|loads) or [] %}
+			{% for opt in options %}
+				<label><input type="radio" name="q_{{ q.id }}" value="{{ opt }}"> {{ opt }}</label><br/>
+			{% endfor %}
+		{% elif q.question_type == 'text' %}
+			<textarea name="q_{{ q.id }}" required></textarea>
+		{% elif q.question_type == 'file' %}
+			<input type="file" name="q_{{ q.id }}_file" required/>
+		{% endif %}
+	</div>
+	{% endfor %}
+	<button type="submit">Submit</button>
+</form>
+{% endblock %}
